@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="dbFileMaintenanceModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="tblGender">
+    <Key>
+      <PropertyRef Name="GenderID" />
+    </Key>
+    <Property Name="GenderID" Type="Boolean" Nullable="false" />
+    <Property Name="Gender" Type="String" MaxLength="6" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="tblPersonRecords" Relationship="Self.FK_tblPersonRecord_tblGender" FromRole="tblGender" ToRole="tblPersonRecord" />
+  </EntityType>
+  <EntityType Name="tblPersonRecord">
+    <Key>
+      <PropertyRef Name="RecordID" />
+    </Key>
+    <Property Name="RecordID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FirstName" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+    <Property Name="MiddleName" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+    <Property Name="LastName" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+    <Property Name="DateOfBirth" Type="DateTime" Precision="0" />
+    <Property Name="GenderID" Type="Boolean" Nullable="false" />
+    <Property Name="ContactNumber" Type="String" MaxLength="11" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="tblGender" Relationship="Self.FK_tblPersonRecord_tblGender" FromRole="tblPersonRecord" ToRole="tblGender" />
+  </EntityType>
+  <Association Name="FK_tblPersonRecord_tblGender">
+    <End Role="tblGender" Type="Self.tblGender" Multiplicity="1" />
+    <End Role="tblPersonRecord" Type="Self.tblPersonRecord" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblGender">
+        <PropertyRef Name="GenderID" />
+      </Principal>
+      <Dependent Role="tblPersonRecord">
+        <PropertyRef Name="GenderID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="dbFileMaintenanceEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="tblGenders" EntityType="Self.tblGender" />
+    <EntitySet Name="tblPersonRecords" EntityType="Self.tblPersonRecord" />
+    <AssociationSet Name="FK_tblPersonRecord_tblGender" Association="Self.FK_tblPersonRecord_tblGender">
+      <End Role="tblGender" EntitySet="tblGenders" />
+      <End Role="tblPersonRecord" EntitySet="tblPersonRecords" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

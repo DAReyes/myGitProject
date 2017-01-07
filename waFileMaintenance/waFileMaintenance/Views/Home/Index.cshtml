@@ -1,0 +1,29 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="jumbotron" style="border:1px solid #888; box-shadow:0px 2px 5px#ccc">
+    <h1>File Maintenance</h1>
+    <p class="lead">Welcome to my sample file maintenance! Using this app, you can create, modify and remove records.</p>
+    
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <h2>@Html.ActionLink("Create New", "Create", "PersonRecords")</h2>
+        <p>
+            Create a new record.
+        </p>
+        
+    </div>
+    <div class="col-md-4">
+        <h2>@Html.ActionLink("View Index", "Index", "PersonRecords")</h2>
+        <p>View all records.</p>
+        
+    </div>
+    @*<div class="col-md-4">
+        <h2>Web Hosting</h2>
+        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
+        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+    </div>*@
+</div>

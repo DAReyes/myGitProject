@@ -1,0 +1,143 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="dbFileMaintenanceModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="tblGender">
+          <Key>
+            <PropertyRef Name="GenderID" />
+          </Key>
+          <Property Name="GenderID" Type="bit" Nullable="false" />
+          <Property Name="Gender" Type="nvarchar" MaxLength="6" />
+        </EntityType>
+        <EntityType Name="tblPersonRecord">
+          <Key>
+            <PropertyRef Name="RecordID" />
+          </Key>
+          <Property Name="RecordID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="40" />
+          <Property Name="MiddleName" Type="nvarchar" MaxLength="40" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="40" />
+          <Property Name="DateOfBirth" Type="date" />
+          <Property Name="GenderID" Type="bit" Nullable="false" />
+          <Property Name="ContactNumber" Type="nvarchar" MaxLength="11" />
+        </EntityType>
+        <Association Name="FK_tblPersonRecord_tblGender">
+          <End Role="tblGender" Type="Self.tblGender" Multiplicity="1" />
+          <End Role="tblPersonRecord" Type="Self.tblPersonRecord" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblGender">
+              <PropertyRef Name="GenderID" />
+            </Principal>
+            <Dependent Role="tblPersonRecord">
+              <PropertyRef Name="GenderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="dbFileMaintenanceModelStoreContainer">
+          <EntitySet Name="tblGender" EntityType="Self.tblGender" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblPersonRecord" EntityType="Self.tblPersonRecord" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_tblPersonRecord_tblGender" Association="Self.FK_tblPersonRecord_tblGender">
+            <End Role="tblGender" EntitySet="tblGender" />
+            <End Role="tblPersonRecord" EntitySet="tblPersonRecord" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="dbFileMaintenanceModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="tblGender">
+          <Key>
+            <PropertyRef Name="GenderID" />
+          </Key>
+          <Property Name="GenderID" Type="Boolean" Nullable="false" />
+          <Property Name="Gender" Type="String" MaxLength="6" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tblPersonRecords" Relationship="Self.FK_tblPersonRecord_tblGender" FromRole="tblGender" ToRole="tblPersonRecord" />
+        </EntityType>
+        <EntityType Name="tblPersonRecord">
+          <Key>
+            <PropertyRef Name="RecordID" />
+          </Key>
+          <Property Name="RecordID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="MiddleName" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="DateOfBirth" Type="DateTime" Precision="0" />
+          <Property Name="GenderID" Type="Boolean" Nullable="false" />
+          <Property Name="ContactNumber" Type="String" MaxLength="11" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tblGender" Relationship="Self.FK_tblPersonRecord_tblGender" FromRole="tblPersonRecord" ToRole="tblGender" />
+        </EntityType>
+        <Association Name="FK_tblPersonRecord_tblGender">
+          <End Role="tblGender" Type="Self.tblGender" Multiplicity="1" />
+          <End Role="tblPersonRecord" Type="Self.tblPersonRecord" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblGender">
+              <PropertyRef Name="GenderID" />
+            </Principal>
+            <Dependent Role="tblPersonRecord">
+              <PropertyRef Name="GenderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="dbFileMaintenanceEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="tblGenders" EntityType="Self.tblGender" />
+          <EntitySet Name="tblPersonRecords" EntityType="Self.tblPersonRecord" />
+          <AssociationSet Name="FK_tblPersonRecord_tblGender" Association="Self.FK_tblPersonRecord_tblGender">
+            <End Role="tblGender" EntitySet="tblGenders" />
+            <End Role="tblPersonRecord" EntitySet="tblPersonRecords" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="dbFileMaintenanceModelStoreContainer" CdmEntityContainer="dbFileMaintenanceEntities">
+          <EntitySetMapping Name="tblGenders">
+            <EntityTypeMapping TypeName="dbFileMaintenanceModel.tblGender">
+              <MappingFragment StoreEntitySet="tblGender">
+                <ScalarProperty Name="GenderID" ColumnName="GenderID" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblPersonRecords">
+            <EntityTypeMapping TypeName="dbFileMaintenanceModel.tblPersonRecord">
+              <MappingFragment StoreEntitySet="tblPersonRecord">
+                <ScalarProperty Name="RecordID" ColumnName="RecordID" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
+                <ScalarProperty Name="GenderID" ColumnName="GenderID" />
+                <ScalarProperty Name="ContactNumber" ColumnName="ContactNumber" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
